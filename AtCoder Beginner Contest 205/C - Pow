@@ -1,0 +1,147 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
+
+public class C_POW {
+    
+     static Scanner in=new Scanner();
+    static PrintWriter out=new PrintWriter(System.out);
+    
+   static long a,b,c;
+   
+    public static long power(long x, long n)
+    {
+        // base condition
+        if (n == 0) {
+            return 1;
+        }
+ 
+        // calculate subproblem recursively
+        long pow = power(x, n / 2);
+ 
+        if ((n & 1) == 1) { // if `y` is odd
+            return x * pow * pow;
+        }
+ 
+        // otherwise, `y` is even
+        return pow * pow;
+    }
+ 
+   
+    public static void main(String[] args) throws IOException {
+        
+   a=in.nextLong();
+   b=in.nextLong();
+   c=in.nextLong();
+  
+  if(c%2==0){
+      
+      if(a<0){
+          
+          a=-a;
+          
+      }
+      
+      if(b<0){
+          
+          b=-b;
+          
+      }
+  
+      if(a==b){
+          
+          out.println("=");
+          out.flush();
+          
+      }
+      
+      else if(a>b){
+          
+          out.println(">");
+          out.flush();
+          
+      }
+      
+      else{
+          
+          out.println("<");
+          out.flush();
+          
+      }
+      
+  }
+  
+  if(c%2==1){
+      
+      if(a==b){
+          
+          out.println("=");
+          out.flush();
+          
+      }else if(a>b){
+          
+          out.println(">");
+          out.flush();
+          
+      }else{
+          
+          out.println("<");
+          out.flush();
+          
+      }
+      
+  }
+  
+    }
+    
+     static class Scanner{
+        
+        BufferedReader in;
+        StringTokenizer st;
+
+        public Scanner() {
+        
+            in=new BufferedReader(new InputStreamReader(System.in));
+            
+        }
+        
+        String next() throws IOException{
+            
+            while(st==null || !st.hasMoreElements()){
+                
+                st=new StringTokenizer(in.readLine());
+                
+            }
+            
+            return st.nextToken();
+            
+        }
+        
+        int nextInt() throws IOException{
+            
+            return Integer.parseInt(next());
+            
+        }
+        
+        long nextLong() throws IOException{
+            
+            return Long.parseLong(next());
+            
+        }
+        
+        double nextDouble() throws IOException{
+            
+            return Double.parseDouble(next());
+            
+        }
+        
+        String nextLine() throws IOException{
+            
+            return in.readLine();
+            
+        }
+    }    
+    
+}
