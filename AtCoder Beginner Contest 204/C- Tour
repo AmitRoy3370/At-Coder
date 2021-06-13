@@ -1,0 +1,78 @@
+import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+
+public class Main{
+
+static Scanner in=new Scanner(System.in);
+
+static List<List<Integer>> list=new ArrayList<>();
+
+static boolean visited[];
+
+static void dfs(int source){
+
+if( visited[source] ){
+
+return;
+
+}
+
+visited[source]=true;
+
+for( int i: list.get(source)  ){
+
+dfs(i);
+
+}
+
+}
+
+public static void main(String[] amit){
+
+int ans=0;
+
+int n=in.nextInt();
+
+int m=in.nextInt();
+
+visited=new boolean[n];
+
+for(int i=0;i<n;i++){
+
+list.add( new ArrayList<>() );
+
+}
+
+for(int i=0;i<m;i++){
+
+int a=in.nextInt();
+int b=in.nextInt();
+
+list.get(a-1).add(b-1);
+
+}
+
+for(int i=0;i<n;i++){
+
+visited=new boolean[n];
+
+dfs(i);
+
+for(int j=0;j<n;j++){
+
+if( visited[j] ){
+
+ans++;
+
+}
+
+}
+
+}
+
+System.out.print(ans);
+
+}
+
+}
