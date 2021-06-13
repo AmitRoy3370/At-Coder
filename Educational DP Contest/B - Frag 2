@@ -1,0 +1,112 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
+
+public class B_Frog_2 {
+
+       static Scanner in=new Scanner();
+    static PrintWriter out=new PrintWriter(System.out);
+    
+    static int n,k;
+    
+    static int a[];
+    static long dp[];
+    
+    public static void main(String[] amit) throws IOException {
+        
+        n=in.nextInt();
+        
+        k=in.nextInt();
+        
+        a=new int[n];
+        
+        dp=new long[n];
+        
+        for(int i=0;i<n;i++){
+            
+            a[i]=in.nextInt();
+            
+            dp[i]=Integer.MAX_VALUE;
+            
+        }
+        
+        dp[0]=0;
+        
+       for(int i=0;i<n;i++){
+           
+           for(int j=i+1;j<=i+k;j++){
+               
+               if(j<n){
+                   
+                   dp[j]=Math.min(dp[j], dp[i]+Math.abs(a[i]-a[j]));
+                   
+               }
+               
+           }
+           
+       }
+        
+       out.println(dp[n-1]); 
+       out.flush();
+       
+    }
+    
+     static class Scanner{
+        
+        BufferedReader in;
+        StringTokenizer st;
+
+        public Scanner() {
+        
+            in=new BufferedReader(new InputStreamReader(System.in));
+            
+        }
+        
+        String next() throws IOException{
+            
+            while(st==null || !st.hasMoreElements()){
+                
+                st=new StringTokenizer(in.readLine());
+                
+            }
+            
+            return st.nextToken();
+            
+        }
+        
+        int nextInt() throws IOException{
+            
+            return Integer.parseInt(next());
+            
+        }
+        
+        long nextLong() throws IOException{
+            
+            return Long.parseLong(next());
+            
+        }
+        
+        double nextDouble() throws IOException{
+            
+            return Double.parseDouble(next());
+            
+        }
+        
+        String nextLine() throws IOException{
+            
+            return in.readLine();
+            
+        }
+        
+    }
+    
+}
+/*
+
+5 3
+10 30 40 50 20
+
+
+*/
