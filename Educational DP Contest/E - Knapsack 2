@@ -1,0 +1,198 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Main {
+
+       static Scanner in=new Scanner();
+        
+    static PrintWriter out=new PrintWriter(System.out);
+    
+    static int n,w;
+    
+    @SuppressWarnings("FieldNameHidesFieldInSuperclass")
+    static long []W;
+    static int[] v;
+   
+    public static void main(String[] amit) throws IOException {
+        
+   n=in.nextInt();
+   w=in.nextInt();
+        
+   W=new long[n];
+   v=new int[n];
+   
+   int max=0;
+   
+   for(int i=0;i<n;i++){
+       
+       W[i]=in.nextLong();
+       v[i]=in.nextInt();
+       
+       max+=v[i];
+       
+   }
+   
+   long dp[][]=new long[n+1][max+1];
+   
+   for(int i=0;i<=n;i++){
+       
+       Arrays.fill(dp[i], w+1);
+       
+   }
+   
+   for(int i=0;i<=n;i++){
+       
+       dp[i][0]=0;
+       
+   }
+   
+   for(int i=0;i<n;i++){
+       
+       for(int j=1;j<=max;j++){
+           
+           if(j>=v[i]){
+               
+               dp[i+1][j]=dp[i][j];
+                       
+               if(dp[i][j-v[i]]!=w+1){
+               
+               dp[i+1][j]=Math.min(W[i]+dp[i][j-v[i]],dp[i+1][j] );
+               
+               }
+               
+           }else{
+               
+               dp[i+1][j]=dp[i][j];
+               
+           }
+           
+       }
+       
+   }
+   
+   /*for(long i[]: dp){
+       
+       for(long j: i){
+           
+           out.print(j+" ");
+           out.flush();
+           
+       }
+       
+       out.println();
+       out.flush();
+       
+   }*/
+   
+  for(int i=max;i>=0;i--){
+      
+      if(dp[n][i]<=w){
+          
+          out.println(i);
+          out.flush();
+          return;
+      }
+      
+  }
+   
+  out.println(-1);
+  out.flush();
+  
+    }
+    
+     static class Scanner{
+        
+        BufferedReader in;
+        StringTokenizer st;
+
+        public Scanner() {
+        
+            in=new BufferedReader(new InputStreamReader(System.in));
+            
+        }
+        
+        String next() throws IOException{
+            
+            while(st==null || !st.hasMoreElements()){
+                
+                st=new StringTokenizer(in.readLine());
+                
+            }
+            
+            return st.nextToken();
+            
+        }
+        
+        int nextInt() throws IOException{
+            
+            return Integer.parseInt(next());
+            
+        }
+        
+        long nextLong() throws IOException{
+            
+            return Long.parseLong(next());
+            
+        }
+        
+        double nextDouble() throws IOException{
+            
+            return Double.parseDouble(next());
+            
+        }
+        
+        String nextLine() throws IOException{
+            
+            return in.readLine();
+            
+        }
+    }    
+    
+}
+/*
+
+3 8
+3 30
+4 50
+5 60
+
+
+*/
+
+/*
+
+5 5
+1 1000000000
+1 1000000000
+1 1000000000
+1 1000000000
+1 1000000000
+
+
+*/
+
+/*
+
+6 15
+6 5
+5 6
+6 4
+6 6
+3 5
+7 2
+
+
+*/
+
+/*
+
+3 8
+1 1
+2 3
+3 4
+
+*/
