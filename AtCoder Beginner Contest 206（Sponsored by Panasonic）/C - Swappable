@@ -1,0 +1,82 @@
+/******************************************************************************
+
+                            Online Java Compiler.
+                Code, Compile, Run and Debug java program online.
+Write your code in this editor and press "Run" button to execute it.
+
+*******************************************************************************/
+
+import java.util.Scanner;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Arrays;
+
+public class Main
+{
+	public static void main(String[] args) {
+	
+	Scanner in=new Scanner(System.in);
+	
+	int n=in.nextInt();
+	
+	long a1[]=new long[n];
+	
+	Map<Long,Long> map=new HashMap<>();
+	
+	for(int i=0;i<n;i++){
+	    
+	    a1[i]=in.nextLong();
+	    
+	    map.put(a1[i],(long)0);
+	    
+	    map.put( a1[i],map.get(a1[i])+1 );
+	    
+	}
+	
+	long rez2=0;
+	
+	for(int i=0;i<n;i++){
+	    
+	    rez2+=(n-map.get(a1[i]) );
+	    
+	}
+	
+	rez2/=2;
+	
+	Arrays.sort(a1);
+	
+	long a[]=new long[n+1];
+	
+	for(int i=0;i<n;i++){
+	    
+	    a[i]=a1[i];
+	    
+	}
+	
+	a[n]=-1;
+	
+	long cnt=1,rez1=((long) n * (n-1))/2;
+	
+	for(int i=0;i<n;i++){
+	    
+	    if(a[i]!=a[i+1]){
+	        
+	        rez1-=(cnt*(cnt-1))/2;
+	        
+	        cnt=1;
+	        
+	    }else{
+	        
+	        cnt++;
+	        
+	    }
+	    
+	}
+	
+	//rez1=rez2;
+	
+	System.out.println(rez1);
+	
+	}
+	
+}
