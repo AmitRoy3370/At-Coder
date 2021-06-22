@@ -1,0 +1,17 @@
+import java.util.Scanner;
+
+public class Main{
+
+  static Scanner in=new Scanner(System.in);
+  
+public static void main(String [] args){
+
+  int a=in.nextInt();
+  int b=in.nextInt();
+  int c=in.nextInt();
+  
+  System.out.print( 21-(a+b+c) );
+  
+}
+  
+}
