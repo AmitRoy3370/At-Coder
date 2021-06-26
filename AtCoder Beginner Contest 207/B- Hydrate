@@ -1,0 +1,91 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
+
+public class Main {
+    
+     static Scanner in=new Scanner();
+    
+    static PrintWriter out=new PrintWriter( System.out );
+    
+    static int a,b,c,d;
+    
+    public static void main(String[] amit) throws IOException {
+        
+        a=in.nextInt();
+        b=in.nextInt();
+        c=in.nextInt();
+        d=in.nextInt();
+       
+        long red=0,cyan=a;
+        
+       for(int i=1;i<=a;i++){
+           
+           cyan+=b;
+           
+           red+=c;
+           
+           if(cyan<=red*d){
+               
+               out.println(i);
+               out.flush();
+           
+               return;
+               
+           }
+           
+       }
+   
+       out.println(-1);
+       out.flush();
+       
+    }
+    
+     static class Scanner{
+        
+        BufferedReader in;
+        StringTokenizer st;
+
+        public Scanner() {
+        
+            in=new BufferedReader( new InputStreamReader( System.in ) );
+            
+        }
+        
+        String next() throws IOException{
+            
+            while( st==null || !st.hasMoreElements() ){
+                
+                st=new StringTokenizer(in.readLine());
+                
+            }
+            
+            return st.nextToken();
+            
+        }
+        
+        String nextLine() throws IOException{
+            
+            return in.readLine();
+            
+        }
+        
+        int nextInt() throws IOException{
+            
+            return Integer.parseInt( next() );
+            
+        }
+        
+        long nextLong() throws IOException{
+            
+            return Long.parseLong( next() );
+            
+        }
+        
+    }
+    
+}
+//5 2 3 2
+//6 9 2 3
