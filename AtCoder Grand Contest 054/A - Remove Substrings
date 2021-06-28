@@ -1,0 +1,112 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
+
+public class Main {
+
+       static Scanner in=new Scanner();
+    
+    static PrintWriter out=new PrintWriter( System.out );
+    
+    static int n;
+    
+    public static void main(String[] args) throws IOException {
+        
+        n=in.nextInt();
+        
+        char ch[]=in.next().toCharArray();
+        
+        if(n>1 && ch[0]!=ch[n-1]){
+            
+            out.println(1);
+            out.flush();
+            
+            return;
+            
+        }
+         
+        int ans=0;
+        
+       for(int i=1;i<n-1;i++){
+           
+           if(ch[i]!=ch[n-1] && ch[i+1]!=ch[n-1] ){
+               
+               ans+=2;
+               break;
+           }
+           
+       }
+        
+       if(ans==0){
+           
+           out.println(-1);
+           out.flush();
+           
+           return;
+           
+       }
+       
+        out.println(ans);
+        out.flush();
+        
+    }
+    
+      static class Scanner{
+        
+        BufferedReader in;
+        StringTokenizer st;
+
+        public Scanner() {
+        
+            in=new BufferedReader( new InputStreamReader( System.in ) );
+            
+        }
+        
+        String next() throws IOException{
+            
+            while( st==null || !st.hasMoreElements() ){
+                
+                st=new StringTokenizer(in.readLine());
+                
+            }
+            
+            return st.nextToken();
+            
+        }
+        
+        String nextLine() throws IOException{
+            
+            return in.readLine();
+            
+        }
+        
+        int nextInt() throws IOException{
+            
+            return Integer.parseInt( next() );
+            
+        }
+        
+        long nextLong() throws IOException{
+            
+            return Long.parseLong( next() );
+            
+        }
+     }
+    
+}
+/*
+
+4
+abba
+
+
+*/
+
+/*
+
+6
+abcbca
+
+*/
