@@ -1,0 +1,25 @@
+import java.util.Scanner;
+
+public class Main{
+
+static Scanner in=new Scanner(System.in);
+
+public static void main(String[] amit){
+
+int a=in.nextInt();
+
+int b=in.nextInt();
+
+if( b-a==1 || b-a==0 || a>b  ){
+
+System.out.println(0);
+
+return;
+
+}
+
+System.out.println( ( (b-a)+1 ) );
+
+}
+
+}
