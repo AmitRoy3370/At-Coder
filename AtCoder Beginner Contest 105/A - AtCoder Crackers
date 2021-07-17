@@ -1,0 +1,17 @@
+import java.util.Scanner;
+
+public class Main{
+
+static Scanner in=new Scanner(System.in);
+
+public static void main(String[] amit){
+
+int a=in.nextInt();
+
+int b=in.nextInt();
+
+System.out.println( ( a%b!=0 )?1: 0  );
+
+}
+
+}
