@@ -1,0 +1,48 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main {
+
+    static Scanner in=new Scanner(System.in);
+    
+    public static void main(String[] amit) {
+        
+  long n=in.nextLong();
+     
+     Stack<Long> stack=new Stack<>();
+  
+     if(n==0){
+         
+         System.out.println("0");
+         
+         return;
+         
+     }
+     
+     long x=-2;
+     
+     while(n!=0){
+         
+         long mod=Math.abs(n%x*-2/x);
+         
+         stack.push(mod);
+         
+         n-=(x/-2)*mod;
+         x*=-2;
+         
+     }
+     
+     while(!stack.isEmpty()){
+         
+         System.out.print(stack.pop());
+         
+     }
+     
+    }
+    
+}
+/*
+
+-9
+
+*/
