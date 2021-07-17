@@ -1,0 +1,175 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
+
+public class Main {
+
+      static Scanner in=new Scanner();
+    
+    static PrintWriter out=new PrintWriter( new OutputStreamWriter(System.out) );
+    
+    static int n,k;
+    
+    static long a[];
+    
+    public static void main(String[] amit) throws IOException {
+        
+        n=in.nextInt();
+        
+        k=in.nextInt();
+        
+        a=new long[n+1];
+        
+       for(int i=1;i<=n;i++){
+           
+           a[i]=in.nextLong();
+           
+       }
+        
+       Map<Long,Integer> map=new HashMap<>();
+       
+       for(int i=1;i<=k;i++){
+           
+           if( !map.containsKey(a[i]) ){
+               
+               map.put(a[i], 1);
+               
+           }else{
+               
+               map.put(a[i], map.get(a[i])+1);
+               
+           }
+           
+       }
+       
+       int ans=map.size();
+       
+       for(int i=k+1;i<=n;i++){
+           
+           if( !map.containsKey(a[i]) ){
+               
+               map.put(a[i], 1);
+               
+           }else{
+               
+               map.put(a[i], map.get(a[i])+1);
+               
+           }
+           
+           if( map.containsKey(a[i-k]) ){
+               
+               map.put(a[i-k], map.get(a[i-k])-1);
+          
+               if( map.get(a[i-k])==0 ){
+                   
+                   map.remove(a[i-k]);
+                   
+               }
+               
+           }
+          
+           ans=Math.max(ans, map.size());
+           
+       }
+       
+       out.println(ans);
+       out.flush();
+       
+    }
+    
+      static class Scanner{
+        
+        BufferedReader in;
+        StringTokenizer st;
+
+        public Scanner() {
+        
+            in=new BufferedReader( new InputStreamReader(System.in) );
+            
+        }
+        
+        String next() throws IOException{
+            
+            while(st==null || !st.hasMoreElements()){
+                
+                st=new StringTokenizer(in.readLine());
+                
+            }
+            
+            return st.nextToken();
+            
+        }
+        
+        int nextInt() throws IOException{
+            
+            return Integer.parseInt(next());
+            
+        }
+        
+        long nextLong() throws IOException{
+            
+            return Long.parseLong(next());
+            
+        }
+        
+        String nextLine() throws IOException{
+            
+            return in.readLine();
+            
+        }
+        
+        char nextChar() throws IOException{
+            
+            return next().charAt(0);
+            
+        }
+        
+        double nextDouble() throws IOException{
+            
+            return Double.parseDouble(next());
+            
+        }
+        
+        float nextFloat() throws IOException{
+            
+            return Float.parseFloat(next());
+            
+        }
+        
+        boolean nextBoolean() throws IOException{
+            
+            return Boolean.parseBoolean(next());
+            
+        }
+        
+    }
+    
+}
+/*
+
+7 3
+1 2 1 2 3 3 1
+
+
+*/
+
+/*
+
+5 5
+4 4 4 4 4
+
+
+*/
+
+/*
+
+10 6
+304621362 506696497 304621362 506696497 834022578 304621362 414720753 304621362 304621362 414720753
+
+
+*/
