@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class Main {
+    
+    static Scanner in = new Scanner(System.in);
+    
+    static double a, b, c, x;
+   
+    static void solve() {
+        
+       if(x <= a) {
+           
+           double t = 1.0;
+           
+           System.out.print(1.0);
+           
+       } else if(x <= b) {
+          
+          c /= (b - a);
+          
+          System.out.print(c);
+       
+       } else {
+           
+           double t = 0.0;
+    
+          System.out.print(t);
+       
+       }
+        
+    }
+    
+    public static void main(String args[]) {
+      
+      a = in.nextDouble();
+      b = in.nextDouble();
+      c = in.nextDouble();
+      x = in.nextDouble();
+      
+      //System.out.println("a: "+ a + " b : " + b + " c : " + c + " x : " + x);
+      
+      solve();
+      
+    }
+}
