@@ -1,0 +1,50 @@
+import java.util.Scanner;
+
+public class Main {
+    
+    static Scanner in = new Scanner(System.in);
+    
+    public static void main(String args[]) {
+      
+      int v = in.nextInt();
+      int a = in.nextInt();
+      int b = in.nextInt();
+      int c = in.nextInt();
+      
+      while(true) {
+          
+          //v -= a;
+          
+          if(a > v) {
+              
+              System.out.print("F");
+              return;
+              
+          }
+          
+          v -= a;
+          
+          //v -= b;
+          
+          if(b > v ) {
+              
+              System.out.print("M");
+              return;
+              
+          }
+          
+          v -= b;
+          
+          if( c > v) {
+              
+              System.out.print("T");
+              return;
+              
+          }
+          
+          v -= c;
+          
+      }
+      
+    }
+}
