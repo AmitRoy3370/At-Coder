@@ -1,0 +1,12 @@
+import java.util.*;
+import java.io.*;
+import java.math.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner Sc=new Scanner(System.in);
+        String s=Sc.next();
+        char[] a=s.toCharArray();
+        Arrays.sort(a);
+        System.out.println(new String(a));
+    }
+}
