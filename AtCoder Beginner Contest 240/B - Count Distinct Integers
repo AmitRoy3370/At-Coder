@@ -1,0 +1,33 @@
+import java.util.Scanner;
+import java.util.Set;
+import java.util.HashSet;
+
+public class Main {
+    
+    static Scanner in = new Scanner(System.in);
+    
+    static int n;
+    
+    static long a[];
+    
+    public static void main(String [] amit) {
+        
+        n = in.nextInt();
+        
+        a = new long[n];
+        
+        Set<Long> set = new HashSet<>();
+        
+        for(int i = 0; i < n; ++i) {
+            
+            a[i] = in.nextLong();
+            
+            set.add(a[i]);
+            
+        }
+        
+        System.out.print(set.size());
+        
+    }
+    
+}
