@@ -1,0 +1,26 @@
+import java.util.Scanner;
+
+public class Main {
+
+static Scanner in = new Scanner(System.in);
+
+static int a, b;
+
+public static void main(String [] amit) {
+
+a  = in.nextInt();
+b = in.nextInt();
+
+if(b - a == 1 || b - a == 9  ) {
+
+System.out.print("Yes");
+
+} else {
+
+System.out.print("No");
+
+}
+
+}
+
+}
