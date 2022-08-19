@@ -1,0 +1,73 @@
+import java.util.Scanner;
+
+public class C_Boxes_and_Candies  {
+	
+	static Scanner in = new Scanner(System.in);
+	
+	static int n;
+	
+	static long x;
+	
+	static long a[];
+	
+	static void solve() {
+		
+		long need_change = 0L;
+		
+		for(int i = 0; i < n - 1; ++i) {
+			
+			if(a[i] + a[i + 1] <= x) {
+				
+				continue;
+				
+			}
+			
+			long consequtive_sum = a[i] + a[i + 1];
+			
+			long change = consequtive_sum - x;
+			
+			//System.out.println("now : " + change + " " + consequtive_sum);
+			
+			need_change += Math.max(change, 0L);
+			
+			a[i + 1] = Math.max(0L, a[i + 1] - change);
+			
+		}
+		
+		//print(a);
+		
+		System.out.print(need_change);
+		
+	}
+	
+	public static void main(String [] amit) {
+		
+		n = in.nextInt();
+		
+		x = in.nextLong();
+		
+		a = new long[n];
+		
+		for(int i = 0; i < n; ++i) {
+			
+			a[i] = in.nextLong();
+			
+		}
+		
+		solve();
+		
+	}
+	
+	static void print(long a[]) {
+		
+		for(long i : a) {
+			
+			System.out.print(i + " ");
+			
+		}
+		
+		System.out.println();
+		
+	}
+	
+}
