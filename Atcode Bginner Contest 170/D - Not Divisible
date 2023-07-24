@@ -1,0 +1,96 @@
+import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Collections;
+
+public class Main {
+    
+    static Scanner in = new Scanner(System.in);
+    
+    static int n;
+    
+    static long a[];
+    
+    static void solve() {
+         
+        n = in.nextInt();
+        
+        a = new long[n + 1];
+        
+        for(int i = 1; i <= n; ++i) {
+            
+            a[i] = in.nextLong();
+            
+        }
+        
+        sort(a);
+        
+        long ans = 0L;
+        
+        Map<Long, Boolean> map = new HashMap<>();
+        
+        long N = (long)(1e6 + 1);
+        
+        for(int i = 1; i <= n; ++i) {
+            
+            //System.out.println("stuck for i :- " + i);
+            
+            if(!map.containsKey(a[i])) {
+                
+                //System.out.println("reach till now");
+                
+                ans += (i + 1 <= n && a[i] != a[i + 1] ? 1L : 0L);
+                
+                if(i + 1 > n) ans++;
+                
+                long j = a[i];
+                
+                while(j < N) {
+                    
+                    //System.out.println("reach in j");
+                    
+                    map.put(j, true);
+                    
+                    j += a[i];
+                    
+                }
+                
+            }
+            
+        }
+        
+        System.out.println(ans);
+        
+    }
+    
+    public static void main(String args[]) {
+       
+        solve();
+      
+    }
+    
+    private static void sort(long a[]) {
+        
+        List<Long> list = new ArrayList<>();
+        
+        for(long i : a) {
+            
+            list.add(i);
+            
+        }
+        
+        Collections.sort(list);
+        
+        int index = 0;
+        
+        for(long i : list) {
+            
+            a[index++] = i;
+            
+        }
+        
+    }
+    
+}
