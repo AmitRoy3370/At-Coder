@@ -1,0 +1,113 @@
+import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+
+public class D_String_Bags {
+    
+    static Scanner in = new Scanner(System.in);
+    
+    static int n, m;
+    
+    static char x[];
+    
+    static List<char[]> list[]; 
+    
+    static void solve() {
+        
+        long dp[][] = new long[m + 1][n + 1];
+        
+        for(int i = 0; i <= m; ++i) {
+            
+            for(int j = 0; j <= n; ++j) {
+                
+                dp[i][j] = (long)(1e8);
+                
+            }
+            
+        }
+        
+        dp[0][0] = 0L;
+        
+        for(int i = 1; i <= m; ++i) {
+            
+            for(int j = 0; j <= n; ++j) {
+                
+                dp[i][j] = dp[i - 1][j];
+                
+            }
+            
+            for(int j = 0; j < list[i - 1].size(); ++j) {
+                
+                for(int k = 0; k <= n - list[i - 1].get(j).length; ++k) {
+                    
+                    boolean yes = true;
+                    
+                    for(int kk = 0; kk < list[i - 1].get(j).length; ++kk) {
+                        
+                        if(x[kk + k] != list[i - 1].get(j)[kk]) {
+                            
+                            yes = false;
+                            break;
+                            
+                        }
+                        
+                    }
+                    
+                    if(yes) {
+                        
+                        dp[i][k + list[i - 1].get(j).length] = Math.min(dp[i][k + list[i - 1].get(j).length], dp[i - 1][k] + 1);
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+        if(dp[m][n] == 1e8) {
+            
+            System.out.println(-1);
+            
+        } else {
+            
+            System.out.println(dp[m][n]);
+            
+        }
+        
+    }
+    
+    public static void main(String[] args) {
+        
+        input();
+        solve();
+        
+    }
+    
+    private static void input() {
+        
+        x = in.next().toCharArray();
+        
+        n = x.length;
+        
+        m = in.nextInt();
+        
+        list = new ArrayList[m];
+        
+        for(int i = 0; i < m; ++i) {
+            
+            int k = in.nextInt();
+            
+            list[i] = new ArrayList<>();
+            
+            for(int j = 0; j < k; ++j) {
+                
+                list[i].add(in.next().toCharArray());
+                
+            }
+            
+        }
+        
+    }
+    
+}
