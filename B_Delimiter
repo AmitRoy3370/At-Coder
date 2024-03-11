@@ -1,0 +1,628 @@
+
+import java.awt.Color;
+import java.util.Scanner;
+import static java.awt.Color.RED;
+import static java.awt.Color.BLACK;
+
+public class B_Delimiter {
+
+    static Scanner in = new Scanner(System.in);
+
+    static Tree<Element> tree = new RedBlack<>();
+
+    static int n;
+
+    static void solve() {
+
+        int i = n - 1;
+
+        //tree.visit();
+        //System.out.println("first data :- " + tree.get(new Element(3)));
+        //System.out.println(new Element(453L, 2).equals(new Element(1)));
+        //System.out.println(n);
+        while (tree != null) {
+
+            //System.out.println(tree.get(new Element(i)).toString());
+            System.out.println(tree.getMax());
+
+            tree.delete(tree.getMax());
+
+            --i;
+
+            //System.out.println("i : " + i);
+            if (0 > i) {
+
+                break;
+
+            }
+
+        }
+
+    }
+
+    public static void main(String[] args) {
+
+        input();
+        solve();
+
+    }
+
+    private static void input() {
+
+        long value = -1;
+
+        int index = 0;
+
+        while (value != 0L) {
+
+            value = in.nextLong();
+
+            //System.out.println("take input :- " + value);
+            tree.add(new Element(value, index++));
+
+            ++n;
+
+        }
+
+    }
+
+    private static class Element implements Comparable<Element> {
+
+        long value = Long.MAX_VALUE;
+        int index;
+
+        public Element(int index) {
+            this.index = index;
+        }
+
+        public Element(long value, int index) {
+            this.value = value;
+            this.index = index;
+        }
+
+        @Override
+        public String toString() {
+            return value + "";
+        }
+
+        @Override
+        public int compareTo(Element e) {
+
+            if (this.index > e.index) {
+
+                return 1;
+
+            } else if (this.index < e.index) {
+
+                return -1;
+
+            }
+
+            return 0;
+
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 5;
+            hash = 53 * hash + this.index;
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final Element other = (Element) obj;
+            return this.index == other.index;
+        }
+
+    }
+
+    private static class Node<T extends Comparable<T>> {
+
+        T data;
+        Node<T> left, right, parent;
+
+        Color color = RED;
+
+        public Node(T data) {
+            this.data = data;
+        }
+
+        public T getData() {
+            return data;
+        }
+
+        public void setData(T data) {
+            this.data = data;
+        }
+
+        public Node<T> getLeft() {
+            return left;
+        }
+
+        public void setLeft(Node<T> left) {
+            this.left = left;
+        }
+
+        public Node<T> getRight() {
+            return right;
+        }
+
+        public void setRight(Node<T> right) {
+            this.right = right;
+        }
+
+        public Node<T> getParent() {
+            return parent;
+        }
+
+        public void setParent(Node<T> parent) {
+            this.parent = parent;
+        }
+
+        public Color getColor() {
+            return color;
+        }
+
+        public void setColor(Color color) {
+            this.color = color;
+        }
+
+        public boolean isLeft() {
+
+            return parent == this;
+
+        }
+
+        public void flipColor() {
+
+            setColor(getColor() == RED ? BLACK : RED);
+
+        }
+
+    }
+
+    private interface Tree<T extends Comparable<T>> {
+
+        Tree<T> add(T data);
+
+        Tree<T> delete(T data);
+
+        T getMax();
+
+        T getMin();
+
+        void visit();
+
+        public T get(T data);
+
+    }
+
+    private static class RedBlack<T extends Comparable<T>> implements Tree<T> {
+
+        Node<T> root;
+
+        @Override
+        public Tree<T> add(T data) {
+
+            Node<T> node = new Node<>(data);
+
+            root = add(root, node);
+
+            applyRotationAndReColoring(root);
+
+            return this;
+
+        }
+
+        private Node<T> add(Node<T> node, Node<T> addedNode) {
+
+            if (isEmpty(node)) {
+
+                return addedNode;
+
+            }
+
+            if (addedNode.getData().compareTo(node.getData()) < 0) {
+
+                node.setLeft(add(node.getLeft(), addedNode));
+                node.getLeft().setParent(node);
+
+            } else if (addedNode.getData().compareTo(node.getData()) > 0) {
+
+                node.setRight(add(node.getRight(), addedNode));
+                node.getRight().setParent(node);
+
+            }
+
+            return node;
+
+        }
+
+        @Override
+        public Tree<T> delete(T data) {
+
+            if (isEmpty()) {
+
+                return this;
+
+            }
+
+            root = delete(root, data);
+
+            applyRotationAndReColoring(root);
+
+            return this;
+
+        }
+
+        private Node<T> delete(Node<T> node, T data) {
+
+            if (isEmpty(node)) {
+
+                return null;
+
+            } else if (data.compareTo(node.getData()) < 0) {
+
+                try {
+
+                    node.setLeft(delete(node.getLeft(), data));
+                    node.getLeft().setParent(node);
+
+                } catch (Exception e) {
+
+                }
+
+            } else if (data.compareTo(node.getData()) > 0) {
+
+                try {
+
+                    node.setRight(delete(node.getRight(), data));
+                    node.getRight().setParent(node);
+
+                } catch (Exception e) {
+
+                }
+
+            } else {
+
+                if (isEmpty(node.getLeft())) {
+
+                    return node.getRight();
+
+                } else if (isEmpty(node.getRight())) {
+
+                    return node.getLeft();
+
+                }
+
+                node.setData(getMax(node.getLeft()));
+                node.setLeft(delete(node.getLeft(), node.getData()));
+
+            }
+
+            //applyRotationAndReColoring(node);
+            return node;
+
+        }
+
+        private void applyRotationAndReColoring(Node<T> node) {
+
+            if (isEmpty(node)) {
+
+                //root.setColor(BLACK);
+                return;
+
+            }
+
+            Node<T> parent = node.getParent();
+
+            if (!isEmpty(parent) && parent.getColor() == RED) {
+
+                Node<T> grandParent = node.getParent().getParent();
+
+                if (isEmpty(grandParent)) {
+
+                    root.setColor(BLACK);
+                    return;
+
+                }
+
+                Node<T> uncle = parent.isLeft() ? grandParent.getRight() : grandParent.getLeft();
+
+                if (!isEmpty(uncle) && uncle.getColor() == RED) {
+
+                    applyReColoring(parent, uncle, grandParent);
+
+                } else if (parent.isLeft()) {
+
+                    leftSitution(node, parent, grandParent);
+
+                } else if (!parent.isLeft()) {
+
+                    rightSitution(node, parent, grandParent);
+
+                }
+
+            }
+
+            root.setColor(RED);
+
+        }
+
+        private void applyReColoring(Node<T> parent, Node<T> uncle, Node<T> grandParent) {
+
+            parent.flipColor();
+            uncle.flipColor();
+            grandParent.flipColor();
+
+            applyRotationAndReColoring(grandParent);
+
+        }
+
+        private void leftSitution(Node<T> node, Node<T> parent, Node<T> grandParent) {
+
+            if (!node.isLeft()) {
+
+                rotateLeft(parent);
+
+            }
+
+            parent.flipColor();
+            grandParent.flipColor();
+
+            rotateRight(grandParent);
+
+            applyRotationAndReColoring(node.isLeft() ? parent : grandParent);
+
+        }
+
+        private void rightSitution(Node<T> node, Node<T> parent, Node<T> grandParent) {
+
+            if (node.isLeft()) {
+
+                rotateRight(parent);
+
+            }
+
+            parent.flipColor();
+            grandParent.flipColor();
+
+            rotateLeft(grandParent);
+
+            applyRotationAndReColoring(node.isLeft() ? grandParent : parent);
+
+        }
+
+        private void rotateLeft(Node<T> node) {
+
+            Node<T> right = node.getRight();
+            Node<T> centerNode = node.getRight().getLeft();
+
+            node.setRight(centerNode);
+
+            if (!isEmpty(node.getRight())) {
+
+                node.getRight().setParent(node);
+
+            }
+
+            right.setLeft(node);
+            //node.setRight(centerNode);
+
+            right.setParent(node.getParent());
+            //node.setParent(right);
+
+            updateChildOfParent(node, right);
+
+            node.setParent(right);
+
+        }
+
+        private void rotateRight(Node<T> node) {
+
+            Node<T> left = node.getLeft();
+            Node<T> centerNode = node.getLeft().getRight();
+
+            node.setLeft(centerNode);
+
+            if (!isEmpty(node.getLeft())) {
+
+                node.getLeft().setParent(node);
+
+            }
+
+            left.setRight(node);
+            //node.setLeft(centerNode);
+
+            left.setParent(node.getParent());
+            //node.setParent(left);
+
+            updateChildOfParent(node, left);
+
+            node.setParent(left);
+
+        }
+
+        private void updateChildOfParent(Node<T> node, Node<T> tempNode) {
+
+            if (isEmpty(node.getParent())) {
+
+                root = tempNode;
+
+            } else if (node.isLeft()) {
+
+                node.getParent().setLeft(tempNode);
+
+            } else if (!node.isLeft()) {
+
+                node.getParent().setRight(tempNode);
+
+            }
+
+        }
+
+        @Override
+        public T getMax() {
+
+            if (isEmpty()) {
+
+                return null;
+
+            }
+
+            return getMax(root);
+
+        }
+
+        private T getMax(Node<T> node) {
+
+            if ((isEmpty(node))) {
+
+                return null;
+
+            }
+
+            if (!isEmpty(node.getRight())) {
+
+                return getMax(node.getRight());
+
+            }
+
+            return node.getData();
+
+        }
+
+        @Override
+        public T getMin() {
+
+            if (isEmpty()) {
+
+                return null;
+
+            }
+
+            return getMin(root);
+
+        }
+
+        private T getMin(Node<T> node) {
+
+            if (!isEmpty(node.getLeft())) {
+
+                return getMin(node.getLeft());
+
+            }
+
+            return node.getData();
+
+        }
+
+        @Override
+        public void visit() {
+
+            if (isEmpty()) {
+
+                return;
+
+            }
+
+            inOrder(root);
+
+            System.out.println();
+
+        }
+
+        private void inOrder(Node<T> node) {
+
+            if (isEmpty(node)) {
+
+                return;
+
+            }
+
+            inOrder(node.getLeft());
+
+            System.out.print(node.getData() + " ");
+
+            inOrder(node.getRight());
+
+        }
+
+        T searchData;
+
+        @Override
+        public T get(T data) {
+
+            if (isEmpty()) {
+
+                return null;
+
+            }
+
+            find = false;
+
+            //searchData = null;
+            get(new Node<>(data), root);
+
+            return searchData;
+
+        }
+
+        boolean find = false;
+
+        private void get(Node<T> search, Node<T> node) {
+
+            if (isEmpty(node)) {
+
+                return;
+
+            }
+
+            get(search, node.getLeft());
+
+            if (node.getData().equals(search.getData())) {
+
+                //System.out.println("match for " + node.getData() + " " + search.getData());
+                find = true;
+
+                //System.out.println("here");
+                searchData = node.getData();
+
+            }
+
+            if (find) {
+
+                return;
+
+            }
+
+            //System.out.println("continue after return");
+            get(search, node.getRight());
+
+        }
+
+        private boolean isEmpty() {
+
+            return isEmpty(root);
+
+        }
+
+        private boolean isEmpty(Node<T> node) {
+
+            return node == null;
+
+        }
+
+    }
+
+}
